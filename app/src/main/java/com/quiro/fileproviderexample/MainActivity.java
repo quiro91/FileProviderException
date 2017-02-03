@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -57,22 +58,23 @@ public class MainActivity extends AppCompatActivity {
     private void takePicture() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            File photoFile = null;
+            Uri photoURI = null;
             try {
-                photoFile = createImageFileWith();
+                File photoFile = createImageFileWith();
+                path = photoFile.getAbsolutePath();
+                photoURI = FileProvider.getUriForFile(MainActivity.this,
+                        getString(R.string.file_provider_authority),
+                        photoFile);
+
             } catch (IOException ex) {
                 Log.e("TakePicture", ex.getMessage());
             }
-            if (photoFile != null) {
-                path = photoFile.getAbsolutePath();
-                Uri photoURI = Uri.fromFile(photoFile);
-                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-                startActivityForResult(takePictureIntent, PHOTO_REQUEST_CODE);
-            }
+            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+            startActivityForResult(takePictureIntent, PHOTO_REQUEST_CODE);
         }
     }
 
-    private static BitmapFactory.Options provideCompressionBitmapFactoryOptions(){
+    private static BitmapFactory.Options provideCompressionBitmapFactoryOptions() {
         BitmapFactory.Options opt = new BitmapFactory.Options();
         opt.inJustDecodeBounds = false;
         opt.inPreferredConfig = Bitmap.Config.RGB_565;

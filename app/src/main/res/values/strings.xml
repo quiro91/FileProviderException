@@ -2,4 +2,6 @@
     <string name="app_name">FileProviderExample</string>
     <string name="share_it">Share it!</string>
     <string name="take_picture">Take a picture</string>
+
+    <string name="file_provider_authority" translatable="false">com.quiro.fileproviderexample.fileprovider</string>
 </resources>
