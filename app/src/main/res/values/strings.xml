@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">FileProviderExample</string>
+    <string name="share_it">Share it!</string>
+    <string name="take_picture">Take a picture</string>
+</resources>
