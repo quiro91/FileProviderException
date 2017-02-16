@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.e("TakePicture", ex.getMessage());
             }
             takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP) {
                 takePictureIntent.setClipData(ClipData.newRawUri("", photoURI));
                 takePictureIntent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
             }
