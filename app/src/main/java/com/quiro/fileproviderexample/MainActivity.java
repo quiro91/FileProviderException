@@ -1,10 +1,12 @@
 package com.quiro.fileproviderexample;
 
 import android.app.Activity;
+import android.content.ClipData;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -70,6 +72,10 @@ public class MainActivity extends AppCompatActivity {
                 Log.e("TakePicture", ex.getMessage());
             }
             takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+                takePictureIntent.setClipData(ClipData.newRawUri("", photoURI));
+                takePictureIntent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+            }
             startActivityForResult(takePictureIntent, PHOTO_REQUEST_CODE);
         }
     }
